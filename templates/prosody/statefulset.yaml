@@ -86,7 +86,7 @@ spec:
           emptyDir: {}
         - name: custom-continit
           configMap:
-            defaultMode: 493
+            defaultMode: 0755
             name: {{ include "jitsi-meet.prosody.fullname" . }}-continit
         - name: custom-defaults
           configMap:
@@ -102,7 +102,7 @@ spec:
         - name: metrics-config
           configMap:
             name: {{ include "jitsi-meet.prosody.fullname" . }}-metrics
-            defaultMode: 420
+            defaultMode: 0644
         {{- end }}
         {{- if .Values.prosody.extraFiles }}
         - name: extra-files
