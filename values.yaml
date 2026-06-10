@@ -102,8 +102,8 @@ web:
     configs:
       _custom_interface_config_js: ""
       _custom_config_js: ""
-  
-  extraFiles: {}
+
+  extraFiles: []
     # - path: /config/nginx-custom/oidc.conf
     #   content: |
     #       location ~ /oidc/ {
@@ -277,6 +277,7 @@ etherpad:
     DEFAULT_PAD_TEXT: " "
     DISABLE_IP_LOGGING: "true"
     TRUST_PROXY: "true"
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   labels: {}
@@ -327,6 +328,7 @@ excalidraw:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   labels: {}
@@ -355,8 +357,6 @@ coturn:
   custom:
     configs:
       _turnserver_conf: ""
-  
-  extraFiles: {}
 
   staticAuth:
     secret:
@@ -450,6 +450,7 @@ coturn:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   labels: {}
@@ -482,8 +483,6 @@ prosody:
       _prosody_cfg_lua: ""
       _saslauthd_conf: ""
       _jitsi_meet_cfg_lua: ""
-  
-  extraFiles: {}
 
   # JWT secret.
   # Required only if authentication type is "token" or "hybrid_matrix_token"
@@ -571,6 +570,7 @@ prosody:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   hostAliases: []
   labels: {}
   nodeSelector: {}
@@ -601,8 +601,6 @@ jicofo:
     defaults:
       _jicofo_conf: ""
       _logging_properties: ""
-  
-  extraFiles: {}
 
   # Jicofo XMPP user credentials
   xmpp:
@@ -630,6 +628,7 @@ jicofo:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   labels: {}
@@ -774,6 +773,7 @@ jvb:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   labels: {}
@@ -844,6 +844,7 @@ jigasi:
   annotations: {}
   extraEnvFrom: []
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   hostAliases: []
@@ -923,6 +924,7 @@ transcriber:
   annotations: {}
   extraEnvFrom: []
   extraEnvs: {}
+  extraFiles: []
   extraVolumes: []
   extraVolumeMounts: []
   hostAliases: []
@@ -973,8 +975,6 @@ jibri:
       _xorg_video_dummy_conf: ""
     other:
       _finalize_sh: ""
-    
-  extraFiles: {}
 
   breweryMuc: jibribrewery
   timeout: 90
@@ -1072,6 +1072,7 @@ jibri:
   affinity: {}
   annotations: {}
   extraEnvs: {}
+  extraFiles: []
   extraSecrets: []
   extraSecretsFrom: []
   extraVolumes: []
