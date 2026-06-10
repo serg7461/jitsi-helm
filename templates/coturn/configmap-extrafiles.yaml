@@ -1,4 +1,7 @@
-{{- if .Values.coturn.extraFiles }}
+{{- if and
+       .Values.coturn.enabled
+       .Values.coturn.extraFiles
+}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

@@ -1,4 +1,8 @@
-{{- if .Values.jibri.extraFiles }}
+{{- if and
+       .Values.jibri.enabled
+       (not .Values.jibri.useExternalJibri)
+       .Values.jibri.extraFiles
+}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
