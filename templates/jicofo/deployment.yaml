@@ -110,13 +110,11 @@ spec:
               mountPath: /defaults/logging.properties
               subPath: logging.properties
             {{- end }}
-            {{- if .Values.jicofo.extraFiles }}
             {{- range $i, $f := .Values.jicofo.extraFiles }}
             - name: extra-files
               mountPath: {{ $f.path }}
               subPath: extrafile-{{ $i }}
               readOnly: true
-            {{- end }}
             {{- end }}
             {{- with .Values.jicofo.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

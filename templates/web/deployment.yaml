@@ -178,13 +178,11 @@ spec:
               mountPath: /usr/share/jitsi-meet/transcripts
               readOnly: true
             {{- end }}
-            {{- if .Values.web.extraFiles }}
             {{- range $i, $f := .Values.web.extraFiles }}
             - name: extra-files
               mountPath: {{ $f.path }}
               subPath: extrafile-{{ $i }}
               readOnly: true
-            {{- end }}
             {{- end }}
             {{- with .Values.web.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

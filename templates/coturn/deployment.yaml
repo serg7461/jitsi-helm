@@ -192,13 +192,11 @@ spec:
               mountPath: /tls
               readOnly: true
             {{- end }}
-            {{- if .Values.coturn.extraFiles }}
             {{- range $i, $f := .Values.coturn.extraFiles }}
             - name: extra-files
               mountPath: {{ $f.path }}
               subPath: extrafile-{{ $i }}
               readOnly: true
-            {{- end }}
             {{- end }}
             {{- with .Values.coturn.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

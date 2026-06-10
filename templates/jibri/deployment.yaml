@@ -186,13 +186,11 @@ spec:
             - name: dev-shm
               mountPath: /dev/shm
             {{- end }}
-            {{- if .Values.jibri.extraFiles }}
             {{- range $i, $f := .Values.jibri.extraFiles }}
             - name: extra-files
               mountPath: {{ $f.path }}
               subPath: extrafile-{{ $i }}
               readOnly: true
-            {{- end }}
             {{- end }}
             {{- with .Values.jibri.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

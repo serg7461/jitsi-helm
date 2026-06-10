@@ -54,6 +54,19 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if .Values.transcriber.extraFiles }}
+        - name: extra-files
+          configMap:
+            name: {{ include "jitsi-meet.transcriber.fullname" . }}-extrafiles
+            items:
+              {{- range $i, $f := .Values.transcriber.extraFiles }}
+              - key: extrafile-{{ $i }}
+                path: extrafile-{{ $i }}
+                {{- with $f.mode }}
+                mode: {{ . }}
+                {{- end }}
+              {{- end }}
+        {{- end }}
         {{- with .Values.transcriber.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -108,6 +121,12 @@ spec:
             {{- if .Values.transcriber.persistence.enabled }}
             - name: transcriber-data
               mountPath: /tmp/transcripts
+            {{- end }}
+            {{- range $i, $f := .Values.transcriber.extraFiles }}
+            - name: extra-files
+              mountPath: {{ $f.path }}
+              subPath: extrafile-{{ $i }}
+              readOnly: true
             {{- end }}
             {{- with .Values.transcriber.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

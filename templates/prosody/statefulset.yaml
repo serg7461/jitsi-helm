@@ -234,13 +234,11 @@ spec:
               mountPath: /defaults/conf.d/jitsi-meet.cfg.lua
               subPath: jitsi-meet.cfg.lua
             {{- end }}
-            {{- if .Values.prosody.extraFiles }}
             {{- range $i, $f := .Values.prosody.extraFiles }}
             - name: extra-files
               mountPath: {{ $f.path }}
               subPath: extrafile-{{ $i }}
               readOnly: true
-            {{- end }}
             {{- end }}
             {{- with .Values.prosody.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

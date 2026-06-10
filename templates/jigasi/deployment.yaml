@@ -45,10 +45,23 @@ spec:
       serviceAccountName: {{ include "jitsi-meet.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.jigasi.podSecurityContext | nindent 8 }}
-      {{- with .Values.jigasi.extraVolumes }}
       volumes:
+        {{- if .Values.jigasi.extraFiles }}
+        - name: extra-files
+          configMap:
+            name: {{ include "jitsi-meet.jigasi.fullname" . }}-extrafiles
+            items:
+              {{- range $i, $f := .Values.jigasi.extraFiles }}
+              - key: extrafile-{{ $i }}
+                path: extrafile-{{ $i }}
+                {{- with $f.mode }}
+                mode: {{ . }}
+                {{- end }}
+              {{- end }}
+        {{- end }}
+        {{- with .Values.jigasi.extraVolumes }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       initContainers:
         - name: init-prosody
           image: "{{ .Values.jigasi.initContainers.busybox.image }}"
@@ -94,10 +107,16 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.jigasi.resources | nindent 12 }}
-          {{- with .Values.jigasi.extraVolumeMounts }}
           volumeMounts:
+            {{- range $i, $f := .Values.jigasi.extraFiles }}
+            - name: extra-files
+              mountPath: {{ $f.path }}
+              subPath: extrafile-{{ $i }}
+              readOnly: true
+            {{- end }}
+            {{- with .Values.jigasi.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
-          {{- end }}
+            {{- end }}
 
       {{- with .Values.jigasi.affinity }}
       affinity:
