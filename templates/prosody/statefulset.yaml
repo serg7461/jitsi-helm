@@ -104,6 +104,19 @@ spec:
             name: {{ include "jitsi-meet.prosody.fullname" . }}-metrics
             defaultMode: 420
         {{- end }}
+        {{- if .Values.prosody.extraFiles }}
+        - name: extra-files
+          configMap:
+            name: {{ include "jitsi-meet.prosody.fullname" . }}-extrafiles
+            items:
+              {{- range $i, $f := .Values.prosody.extraFiles }}
+              - key: extrafile-{{ $i }}
+                path: extrafile-{{ $i }}
+                {{- with $f.mode }}
+                mode: {{ . }}
+                {{- end }}
+              {{- end }}
+        {{- end }}
         {{- with .Values.prosody.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -220,6 +233,14 @@ spec:
             - name: custom-defaults
               mountPath: /defaults/conf.d/jitsi-meet.cfg.lua
               subPath: jitsi-meet.cfg.lua
+            {{- end }}
+            {{- if .Values.prosody.extraFiles }}
+            {{- range $i, $f := .Values.prosody.extraFiles }}
+            - name: extra-files
+              mountPath: {{ $f.path }}
+              subPath: extrafile-{{ $i }}
+              readOnly: true
+            {{- end }}
             {{- end }}
             {{- with .Values.prosody.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}

@@ -82,6 +82,19 @@ spec:
             sizeLimit: {{ .Values.jibri.shm.size | default "2Gi" | quote }}
           {{- end }}
         {{- end }}
+        {{- if .Values.jibri.extraFiles }}
+        - name: extra-files
+          configMap:
+            name: {{ include "jitsi-meet.jibri.fullname" . }}-extrafiles
+            items:
+              {{- range $i, $f := .Values.jibri.extraFiles }}
+              - key: extrafile-{{ $i }}
+                path: extrafile-{{ $i }}
+                {{- with $f.mode }}
+                mode: {{ . }}
+                {{- end }}
+              {{- end }}
+        {{- end }}
         {{- with .Values.jibri.extraVolumes }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -172,6 +185,14 @@ spec:
             {{- if .Values.jibri.shm.enabled }}
             - name: dev-shm
               mountPath: /dev/shm
+            {{- end }}
+            {{- if .Values.jibri.extraFiles }}
+            {{- range $i, $f := .Values.jibri.extraFiles }}
+            - name: extra-files
+              mountPath: {{ $f.path }}
+              subPath: extrafile-{{ $i }}
+              readOnly: true
+            {{- end }}
             {{- end }}
             {{- with .Values.jibri.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
