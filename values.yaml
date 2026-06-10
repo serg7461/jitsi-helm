@@ -102,6 +102,21 @@ web:
     configs:
       _custom_interface_config_js: ""
       _custom_config_js: ""
+  
+  extraFiles: {}
+    # - path: /config/nginx-custom/oidc.conf
+    #   content: |
+    #       location ~ /oidc/ {
+    #           proxy_pass http://127.0.0.1:9000;
+    #           proxy_http_version 1.1;
+    #           proxy_set_header X-Forwarded-For $remote_addr;
+    #           proxy_set_header Host $http_host;
+    #       }
+    # - path: /etc/cont-init.d/20-custom
+    #   mode: "0755"
+    #   content: |
+    #     #!/usr/bin/env bash
+    #     echo "Hello"
 
   service:
     type: ClusterIP
@@ -340,6 +355,8 @@ coturn:
   custom:
     configs:
       _turnserver_conf: ""
+  
+  extraFiles: {}
 
   staticAuth:
     secret:
@@ -465,6 +482,8 @@ prosody:
       _prosody_cfg_lua: ""
       _saslauthd_conf: ""
       _jitsi_meet_cfg_lua: ""
+  
+  extraFiles: {}
 
   # JWT secret.
   # Required only if authentication type is "token" or "hybrid_matrix_token"
@@ -582,6 +601,8 @@ jicofo:
     defaults:
       _jicofo_conf: ""
       _logging_properties: ""
+  
+  extraFiles: {}
 
   # Jicofo XMPP user credentials
   xmpp:
@@ -952,6 +973,8 @@ jibri:
       _xorg_video_dummy_conf: ""
     other:
       _finalize_sh: ""
+    
+  extraFiles: {}
 
   breweryMuc: jibribrewery
   timeout: 90
